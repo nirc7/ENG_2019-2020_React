@@ -23,14 +23,16 @@ function App() {
           </Route>
           <Route path="/page3/:userId" component={Page3} />
           <Route path="/personsList">
-            <PersonsList/>
+            <PersonsList />
           </Route>
           <Route path="/addPerson">
-            <AddPerson/>
+            <AddPerson />
           </Route>
         </Switch>
-        {Footer}
       </header>
+      <div className="footer">
+        {Footer}
+      </div>
     </div>
   );
 }
