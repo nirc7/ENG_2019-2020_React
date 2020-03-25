@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 
 class Page1 extends Component {
   constructor(props) {
@@ -12,12 +13,12 @@ class Page1 extends Component {
   btngo2Page2 = () => {
     var userObj = {
       userId: 7,
-      userName:'avi'
+      userName: 'avi'
     };
 
     this.props.history.push({
       pathname: '/page2/',
-      state: { userObj : userObj } //the same as  -> state: { userObj } 
+      state: { userObj: userObj } //the same as  -> state: { userObj } 
     });
 
   }
@@ -26,10 +27,14 @@ class Page1 extends Component {
     return (
       <div>
         <h1>PAGE1 - HOME</h1>
-        <button onClick={this.btngo2Page2}>go 2 PAGE2</button>
+        <Button
+          color="primary"
+          variant="outlined"
+          size="large"
+          onClick={this.btngo2Page2}>go 2 PAGE2</Button>
       </div>
     );
   }
-}    
+}
 
 export default withRouter(Page1); 
