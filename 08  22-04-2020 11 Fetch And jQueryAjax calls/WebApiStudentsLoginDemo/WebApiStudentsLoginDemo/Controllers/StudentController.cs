@@ -25,6 +25,8 @@ namespace WebApiStudentsLoginDemo.Controllers
             return StudentsDB.GetStudentByEmailAndPassword(email, password);
         }
 
+
+
         //opt2 - less code
         //public Student Get(string email, string password)
         //{
@@ -32,10 +34,43 @@ namespace WebApiStudentsLoginDemo.Controllers
         //        .SingleOrDefault(st => st.Email == email && st.Password == password);
         //}
 
-        //[DisableCors]
-        public Student Post([FromBody] Student val)
+        [Route(Name = "GetStudentById")]
+        public IHttpActionResult Get(int id)
         {
-            return StudentsDB.GetStudentByEmailAndPassword(val.Email, val.Password);
+            try
+            {
+                Student res = StudentsDB.GetStudentById(id);
+                if (res == null)
+                {
+                    return Content(HttpStatusCode.NotFound, $"student with id= {id} was not found!");
+                }
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+        //[DisableCors]
+        public IHttpActionResult Post([FromBody] Student val)
+        {
+            //return StudentsDB.GetStudentByEmailAndPassword(val.Email, val.Password);
+            try
+            {
+                Student res =  StudentsDB.InsertStudentToDb(val);
+                if (res ==null)
+                {
+                    return Content(HttpStatusCode.BadRequest, $"could not insert student {val.ToString()} or already exists !");
+                }
+                return Created(new Uri(Url.Link("GetStudentById" , new {id = res.ID })),res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+                throw;
+            }
         }
     }
 }

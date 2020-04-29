@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 
 
 var url = 'http://localhost:58672/api/student';
@@ -73,9 +74,11 @@ class Login extends Component {
     return (
       <div>
         <h1>Login</h1>
-          Email: <input type="text" onChange={this.chgTxtEmail} /> <br />
-          Password: <input type="text" onChange={this.chgTxtPass} /> <br />
-        <button onClick={this.btnLogin}>Login</button>
+        Email: <input type="text" onChange={this.chgTxtEmail} /> <br />
+        Password: <input type="text" onChange={this.chgTxtPass} /> <br /> <br/>
+        <Button variant="outlined" color="primary" onClick={this.btnLogin}>
+          Login
+        </Button>
         {this.state.showErrLbl && <h3 style={{ color: 'red' }} >Error name or Pass</h3>}
       </div>
     )

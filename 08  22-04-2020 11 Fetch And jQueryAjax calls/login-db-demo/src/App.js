@@ -3,6 +3,9 @@ import './App.css';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Login from './PAGES/Login';
 import Home from './PAGES/Home';
+import Students from './PAGES/Students';
+import AddStudent from './PAGES/AddStudent';
+
 
 function App() {
   return (
@@ -15,6 +18,12 @@ function App() {
             </Route>
             <Route path="/home">
               <Home />
+            </Route>
+            <Route path="/students">
+              <Students />
+            </Route>
+            <Route path="/addstudent">
+              <AddStudent/>
             </Route>
           </Switch>
         </header>
