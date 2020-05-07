@@ -106,6 +106,56 @@ namespace WebApiStudentsLoginDemo.Models
             comm.Connection.Close();
             return s;
         }
+        public static int DeleteStudentById(int id)
+        {
+            string strComm =
+                    $" DELETE StudentsTB " +
+                    $" WHERE ID={id}";
+
+            return ExcNonQ(strComm);
+        }
+
+        public static int UpdateStudent(Student s)
+        {
+            string strComm =
+                  $" UPDATE StudentsTB SET " +
+                  $" Name='{s.Name}' , " +
+                  $" Email='{s.Email}' , " +
+                  $" Password='{s.Password}' , " +
+                  $" Grade={s.Grade} " +
+                  $" WHERE ID={s.ID}";
+
+            return ExcNonQ(strComm);
+        }
+
+        private static int ExcNonQ(string comm2Run)
+        {
+            SqlConnection con = new SqlConnection(strCon);
+            SqlCommand comm = new SqlCommand(comm2Run, con);
+            comm.Connection.Open();
+            int res = comm.ExecuteNonQuery();
+            comm.Connection.Close();
+            return res;
+        }
+
+        public static List<Student> ExcReader(string comm2Run)
+        {
+            List<Student> sl = new List<Student>();
+            SqlConnection con = new SqlConnection(strCon);
+            SqlCommand comm = new SqlCommand(comm2Run, con);
+            comm.Connection.Open();
+            SqlDataReader reader = comm.ExecuteReader();
+            while (reader.Read())
+            {
+                Student s = new Student(
+                    (int)reader["ID"],
+                    (string)reader["Name"], (string)reader["Email"], (string)reader["Password"],
+                    (int)reader["Grade"]);
+                sl.Add(s);
+            }
+            comm.Connection.Close();
+            return sl;
+        }
 
     }
 }

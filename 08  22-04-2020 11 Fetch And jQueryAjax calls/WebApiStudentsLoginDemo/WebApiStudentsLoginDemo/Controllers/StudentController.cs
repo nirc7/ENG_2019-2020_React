@@ -13,9 +13,18 @@ namespace WebApiStudentsLoginDemo.Controllers
     public class StudentController : ApiController
     {
         //[EnableCors( "*", "*", "*")]
-        public IEnumerable<Student> Get()
+        public IHttpActionResult Get()
         {
-            return StudentsDB.GetAllStudents();
+            try
+            {
+                return Ok(StudentsDB.GetAllStudents());
+            }
+            catch (Exception ex)
+            {
+                //return BadRequest(ex.Message);
+                return BadRequest("could not get all the students!\n  -- " + ex.Message);
+                //return Content(HttpStatusCode.BadRequest,ex);
+            }
         }
 
         //opt1 - time efficient
@@ -24,9 +33,7 @@ namespace WebApiStudentsLoginDemo.Controllers
         {
             return StudentsDB.GetStudentByEmailAndPassword(email, password);
         }
-
-
-
+               
         //opt2 - less code
         //public Student Get(string email, string password)
         //{
@@ -52,7 +59,6 @@ namespace WebApiStudentsLoginDemo.Controllers
             }
         }
 
-
         //[DisableCors]
         public IHttpActionResult Post([FromBody] Student val)
         {
@@ -69,7 +75,51 @@ namespace WebApiStudentsLoginDemo.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
-                throw;
+            }
+        }
+
+        public IHttpActionResult Delete(int id)
+        {
+            try
+            {
+                Student s = StudentsDB.GetStudentById(id);
+                if (s != null)
+                {
+                    int res = StudentsDB.DeleteStudentById(id);
+                    if (res == 1)
+                    {
+                        return Ok();
+                    }
+                    return Content(HttpStatusCode.BadRequest, $"student with id {id} exsits but could not be deleted!!!");
+                }
+                return Content(HttpStatusCode.NotFound, "student with id = " + id + " was not found to delete!!!");
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        public IHttpActionResult Put(Student student2Update)
+        {
+            try
+            {
+                Student s = StudentsDB.GetStudentById(student2Update.ID);
+                if (s != null)
+                {
+                    int res = StudentsDB.UpdateStudent(student2Update);
+                    if (res == 1)
+                    {
+                        return Ok();
+                    }
+                    return Content(HttpStatusCode.NotModified, $"student with id {student2Update.ID} exsits but could not be modified!!!");
+                }
+                return Content(HttpStatusCode.NotFound, "student with id = " + student2Update.ID + " was not found to update!!!");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
     }

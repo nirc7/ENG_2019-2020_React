@@ -68,6 +68,9 @@ function AddStudent(props) {
 
   return (
     <div>
+      <div>
+        <h2>Add Student</h2>
+      </div>
       <TextField id="name" label="Name" color="primary"
         onChange={(e) => {
           name = e.target.value;

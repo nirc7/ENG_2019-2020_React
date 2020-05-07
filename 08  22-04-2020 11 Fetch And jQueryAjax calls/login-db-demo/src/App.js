@@ -5,6 +5,7 @@ import Login from './PAGES/Login';
 import Home from './PAGES/Home';
 import Students from './PAGES/Students';
 import AddStudent from './PAGES/AddStudent';
+import EditStudent from './PAGES/EditStudent';
 
 
 function App() {
@@ -24,6 +25,9 @@ function App() {
             </Route>
             <Route path="/addstudent">
               <AddStudent/>
+            </Route>
+            <Route path="/editstudent">
+              <EditStudent/>
             </Route>
           </Switch>
         </header>
