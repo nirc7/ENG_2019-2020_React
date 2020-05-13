@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
-
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { green } from '@material-ui/core/colors';
 
 var url = 'http://localhost:58672/api/student';
 
@@ -76,9 +77,16 @@ class Login extends Component {
         <h1>Login</h1>
         Email: <input type="text" onChange={this.chgTxtEmail} /> <br />
         Password: <input type="text" onChange={this.chgTxtPass} /> <br /> <br/>
-        <Button variant="outlined" color="primary" onClick={this.btnLogin}>
+        <ExitToAppIcon
+          style={{
+            color: green[500],
+            fontSize: 40,
+            margin:20
+          }}
+          onClick={this.btnLogin} />
+        {/* <Button variant="outlined" color="primary" onClick={this.btnLogin}>
           Login
-        </Button>
+        </Button> */}
         {this.state.showErrLbl && <h3 style={{ color: 'red' }} >Error name or Pass</h3>}
       </div>
     )
